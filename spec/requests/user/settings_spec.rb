@@ -19,6 +19,32 @@ describe "User profile settings page", type: :system, js: true do
   end
 
   describe "profile preview" do
+    it "sizes the preview container height to the scaled content height" do
+      visit settings_profile_path
+
+      within_section "Preview", section_element: :aside do
+        result = evaluate_script(<<~JS)
+          (() => {
+            const outer = document.querySelector('[role="document"]');
+            const inner = outer && outer.firstElementChild;
+            if (!outer || !inner) return null;
+            const transform = window.getComputedStyle(inner).transform;
+            const matrix = transform.match(/matrix\(([^,]+)/);
+            const scaleFactor = matrix ? parseFloat(matrix[1]) : 1;
+            return {
+              outerHeight: outer.offsetHeight,
+              innerClientHeight: inner.clientHeight,
+              scaleFactor: scaleFactor
+            };
+          })()
+        JS
+
+        expect(result).not_to be_nil
+        expected_height = (result["innerClientHeight"] * result["scaleFactor"]).ceil
+        expect(result["outerHeight"]).to eq(expected_height)
+      end
+    end
+
     it "renders the header" do
       visit settings_profile_path
 
