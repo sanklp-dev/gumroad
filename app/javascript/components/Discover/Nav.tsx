@@ -46,7 +46,7 @@ export const Nav = ({
   const isDesktop = useIsAboveBreakpoint("lg");
 
   return (
-    <div role="nav">
+    <nav>
       <NestedMenu
         type={isDesktop ? "menubar" : "menu"}
         moreLabel="More Categories"
@@ -57,9 +57,8 @@ export const Nav = ({
           if (item.href) onClickTaxonomy(item.href.replace(/^\//u, ""));
         }}
         footer={footer}
-        menuTop="0px"
       />
-    </div>
+    </nav>
   );
 };
 

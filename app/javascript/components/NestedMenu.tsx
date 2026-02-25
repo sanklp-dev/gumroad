@@ -9,7 +9,7 @@ import { Button } from "$app/components/Button";
 import { useCurrentSeller } from "$app/components/CurrentSeller";
 import { Icon } from "$app/components/Icons";
 import { Popover, PopoverContent, PopoverTrigger } from "$app/components/Popover";
-import { Sheet } from "$app/components/ui/Sheet";
+import { Sheet, SheetHeader } from "$app/components/ui/Sheet";
 import { useIsOnTouchDevice } from "$app/components/useIsOnTouchDevice";
 import { useOnOutsideClick } from "$app/components/useOnOutsideClick";
 import { useWindowDimensions } from "$app/components/useWindowDimensions";
@@ -34,7 +34,6 @@ type NestedMenuProps = {
   moreLabel?: string;
   buttonLabel?: string;
   footer?: React.ReactNode;
-  menuTop?: string;
 } & React.AriaAttributes;
 
 export const NestedMenu = ({
@@ -45,7 +44,6 @@ export const NestedMenu = ({
   moreLabel,
   buttonLabel,
   footer,
-  menuTop,
   ...extraAriaAttrs
 }: NestedMenuProps) => {
   const itemsMap = React.useMemo(() => {
@@ -83,7 +81,7 @@ export const NestedMenu = ({
         {type === "menubar" ? (
           <Menubar moreLabel={moreLabel} {...extraAriaAttrs} />
         ) : (
-          <OverlayMenu buttonLabel={buttonLabel} footer={footer} menuTop={menuTop} {...extraAriaAttrs} />
+          <OverlayMenu buttonLabel={buttonLabel} footer={footer} {...extraAriaAttrs} />
         )}
       </div>
     </MenuContext.Provider>
@@ -302,12 +300,10 @@ const MenubarItem = ({
 const OverlayMenu = ({
   buttonLabel,
   footer,
-  menuTop,
   ...extraAriaAttrs
 }: {
   buttonLabel?: string | undefined;
   footer?: React.ReactNode;
-  menuTop?: string | undefined;
 } & React.AriaAttributes) => {
   const { onSelectItem, topLevelMenuItems } = useMenuContext();
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -332,6 +328,7 @@ const OverlayMenu = ({
         modal
         className="right-auto w-80 max-w-80 border-l-0 p-0 md:left-0 md:border-r"
       >
+        <SheetHeader>{buttonLabel ?? "Categories"}</SheetHeader>
         <ItemsList
           key={`${overlayMenuUID}-${menuOpen}`}
           menuId={overlayMenuUID}
