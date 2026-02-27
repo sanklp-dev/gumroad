@@ -269,8 +269,8 @@ const CtaBar = ({
         bottom: isDesktop ? undefined : 0,
         left: 0,
         right: 0,
-        // Render above the product edit button
-        zIndex: "var(--z-index-menubar)",
+        // Render below the product edit button
+        zIndex: "var(--z-index-overlay)",
         marginTop: hasHero ? "var(--border-width)" : undefined,
       }}
     >
@@ -344,8 +344,8 @@ const EditButton = ({ product }: { product: Product }) => {
         top: isDesktop ? "var(--spacer-3)" : "var(--spacer-4)",
         right: isDesktop ? undefined : "var(--spacer-4)",
         left: isDesktop ? "var(--spacer-3)" : undefined,
-        // Render above the product `article`
-        zIndex: "var(--z-index-overlay)",
+        // Render above the CtaBar
+        zIndex: "var(--z-index-header)",
       }}
     >
       <WithTooltip tip="Edit product" position={isDesktop ? "right" : "left"}>
