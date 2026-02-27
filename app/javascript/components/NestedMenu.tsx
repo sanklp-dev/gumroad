@@ -34,7 +34,6 @@ type NestedMenuProps = {
   moreLabel?: string;
   buttonLabel?: string;
   footer?: React.ReactNode;
-  menuTop?: string;
 } & React.AriaAttributes;
 
 export const NestedMenu = ({
@@ -45,7 +44,6 @@ export const NestedMenu = ({
   moreLabel,
   buttonLabel,
   footer,
-  menuTop,
   ...extraAriaAttrs
 }: NestedMenuProps) => {
   const itemsMap = React.useMemo(() => {
@@ -83,7 +81,7 @@ export const NestedMenu = ({
         {type === "menubar" ? (
           <Menubar moreLabel={moreLabel} {...extraAriaAttrs} />
         ) : (
-          <OverlayMenu buttonLabel={buttonLabel} footer={footer} menuTop={menuTop} {...extraAriaAttrs} />
+          <OverlayMenu buttonLabel={buttonLabel} footer={footer} {...extraAriaAttrs} />
         )}
       </div>
     </MenuContext.Provider>
@@ -302,12 +300,10 @@ const MenubarItem = ({
 const OverlayMenu = ({
   buttonLabel,
   footer,
-  menuTop,
   ...extraAriaAttrs
 }: {
   buttonLabel?: string | undefined;
   footer?: React.ReactNode;
-  menuTop?: string | undefined;
 } & React.AriaAttributes) => {
   const { onSelectItem, topLevelMenuItems } = useMenuContext();
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -317,7 +313,6 @@ const OverlayMenu = ({
     <>
       <Button
         color="filled"
-        size="icon"
         onClick={() => setMenuOpen(true)}
         aria-controls={overlayMenuUID}
         aria-expanded={menuOpen}
